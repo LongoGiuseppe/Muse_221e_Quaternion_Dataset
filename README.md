@@ -155,11 +155,9 @@ rms_yaw_err_deg
 dominant_error_component
 ```
 
-Use this file to inspect which axes or trajectories are more difficult before training an AI model.
-
 ### `trajectories/<trajectory>/<axis>/aligned_quaternions.csv`
 
-This is the recommended file format for sequence-based AI work. Each file contains one aligned trajectory for one axis.
+Each file contains one aligned trajectory for one axis.
 
 Example path:
 
@@ -171,7 +169,7 @@ The columns are the same as in `summary/all_samples.csv`, but restricted to one 
 
 ### `trajectories/<trajectory>/<axis>/aligned_quaternions.mat`
 
-MATLAB version of the same per-trial data. Use this if working directly in MATLAB.
+MATLAB version of the same per-trial data.
 
 ### `trajectories/<trajectory>/<axis>/metadata.json`
 
@@ -276,8 +274,6 @@ An alternative is:
 input  = q_Muse
 output = q_robot
 ```
-
-but predicting the residual correction `q_err` is usually cleaner than predicting the full robot orientation.
 
 ## Euler-error convention
 
@@ -390,53 +386,10 @@ mat_path = fullfile(root, valid_manifest.relative_mat_path{1});
 S = load(mat_path);
 ```
 
-## Suggested train/test split policy
-
-Do not randomly split individual samples from the same trajectory between train and test. Adjacent samples are strongly correlated.
-
-Prefer splitting by trajectory or by trajectory-axis pair:
-
-```text
-recommended: split by trial_id or trajectory_name
-avoid: random row-wise split of all_samples.csv
-```
-
-For example, use complete trajectory-axis sequences for training and reserve different complete trajectories for validation/testing.
-
-## Practical recommendation for AI compensation
-
-Default input/output definition:
-
-```text
-input features:
-    q_Muse_w, q_Muse_x, q_Muse_y, q_Muse_z
-
-target:
-    q_err_w, q_err_x, q_err_y, q_err_z
-```
-
-Optional additional input features:
-
-```text
-axis
-trajectory type / k_index
-time_s or normalized time within trajectory
-```
-
-Default filtering:
-
-```text
-1. keep only manifest rows with valid = 1
-2. use per-trial files for sequence models
-3. use summary/all_samples.csv only for quick sample-level baselines
-4. keep quaternion order [w x y z]
-5. normalize predicted quaternions before applying them
-```
-
 ## Notes for users of this repository
 
 This repository contains the generated dataset, not the original raw acquisition folders.
 
-The `Inspection/` figures are included to allow visual sanity checks before training models. They are not used directly by the AI pipeline.
+The `Inspection/` figures are included to allow visual sanity checks before training models.
 
 The manifest is the authoritative file for deciding which trajectory-axis pairs should be used by default.
