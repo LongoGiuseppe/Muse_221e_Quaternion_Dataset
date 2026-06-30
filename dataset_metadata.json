@@ -1,0 +1,30 @@
+{
+  "dataset_name": "MUSE_221e_aligned_quaternion_dataset",
+  "dataset_version": "v1.0",
+  "exporter_version": "MUSE_221e_dataset_exporter_v1.0",
+  "created_at": "2026-06-30 17:14:21",
+  "sensor": "MUSE",
+  "stage": "after 221e compensation, SLERP resampling, onset alignment, and robot-to-MUSE frame transform",
+  "quaternion_order": "wxyz",
+  "q_err_definition": "q_err = conjugate(q_muse) * q_robot",
+  "reconstruction_convention": "q_robot ~= q_muse * q_err",
+  "euler_convention": "ZYX yaw-pitch-roll, degrees",
+  "axes": [
+    "x",
+    "y",
+    "z"
+  ],
+  "nominal_sample_rate_hz": 125,
+  "validity_policy": "Rows with NaN/Inf time or quaternion components, or near-zero quaternion norm, are removed before export.",
+  "min_valid_fraction": 0.95,
+  "output_files": [
+    "dataset_manifest.csv",
+    "summary/all_trials_metrics.csv",
+    "summary/all_samples.csv",
+    "trajectories/<trajectory>/<axis>/aligned_quaternions.csv",
+    "trajectories/<trajectory>/<axis>/aligned_quaternions.mat",
+    "trajectories/<trajectory>/<axis>/metadata.json",
+    "Inspection/summary/*.png",
+    "Inspection/trajectories/<trajectory>/<axis>/*.png"
+  ]
+}

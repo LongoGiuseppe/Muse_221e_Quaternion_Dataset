@@ -1,0 +1,26 @@
+Global MUSE 221e dataset inspection summary
+Generated: 2026-06-30 17:23:39
+
+Total exported trials in metrics table: 83
+
+Axis X
+  n_trials: 28
+  mean_rms_eul_err_norm_deg: 3.828937
+  std_rms_eul_err_norm_deg: 2.135270
+  mean_p95_eul_err_norm_deg: 5.683806
+  mean_rms_error_angle_so3_deg: 3.825779
+
+Axis Y
+  n_trials: 28
+  mean_rms_eul_err_norm_deg: 5.189597
+  std_rms_eul_err_norm_deg: 7.835769
+  mean_p95_eul_err_norm_deg: 8.039040
+  mean_rms_error_angle_so3_deg: 5.188548
+
+Axis Z
+  n_trials: 27
+  mean_rms_eul_err_norm_deg: 3.249772
+  std_rms_eul_err_norm_deg: 1.762070
+  mean_p95_eul_err_norm_deg: 4.939970
+  mean_rms_error_angle_so3_deg: 3.244906
+

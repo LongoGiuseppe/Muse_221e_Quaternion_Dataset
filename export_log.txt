@@ -1,0 +1,5 @@
+Export started: 2026-06-30 17:14:21
+Base folder: C:\Users\giulo\Documents\PhD\26_AI_Magister\Comparative sensori
+FAILED muse_z_k015_t4_150: Error using compute_muse_221e_dataset_tables (line 49)
+No valid samples after NaN/Inf and quaternion-norm filtering. Raw samples=1069.
+Export completed: success=83, failed=1

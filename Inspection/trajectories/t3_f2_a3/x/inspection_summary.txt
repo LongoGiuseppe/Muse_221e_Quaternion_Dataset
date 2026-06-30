@@ -1,0 +1,17 @@
+trial_id: muse_x_k008_t3_f2_a3
+axis: x
+n_samples: 929
+duration_s: 7.424000
+rms_eul_err_norm_deg: 1.298525
+p95_eul_err_norm_deg: 2.036982
+rms_error_angle_so3_deg: 1.297718
+dominant_error_component: roll_x
+
+221e alignment diagnostics
+idx_start_robot: 3
+idx_start_muse: 71
+i0_robot: 2
+i0_muse: 70
+N_align: 929
+museGyroThreshold: 1.10513775379
+robotDiffThreshold: 0.0001
