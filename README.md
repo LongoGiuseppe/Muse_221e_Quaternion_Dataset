@@ -1,19 +1,17 @@
-# MUSE 221e aligned quaternion dataset
+# Muse 221e aligned quaternion dataset
 
-This repository contains aligned quaternion data from the MUSE sensor and the robot reference system. The data are intended for AI-based compensation of quaternion errors.
+This repository contains aligned quaternion data from the Muse sensor and the robot reference system. The data are intended for AI-based compensation of quaternion errors.
 
-The exported data are already processed through the same pipeline used for the MUSE 221e analysis:
+The exported data are already processed through the same pipeline used for the Muse 221e analysis:
 
 ```text
-raw MUSE + raw robot
+raw Muse + raw robot
 → 221e compensation
 → quaternion SLERP resampling
 → onset-based alignment
-→ robot quaternion transformed into the MUSE frame
+→ robot quaternion transformed into the Muse frame
 → dataset export
 ```
-
-No MATLAB pipeline needs to be run to use this dataset. Colleagues should load the CSV or MAT files directly.
 
 ## Dataset status
 
@@ -83,7 +81,7 @@ n_raw_samples         number of samples before validity filtering
 n_removed_samples     number of removed samples
 valid_fraction        n_samples / n_raw_samples
 sample_rate_hz        nominal sampling rate after alignment/resampling
-source_muse_file      original MUSE file name
+source_Muse_file      original Muse file name
 source_robot_file     original robot file name
 valid                 1 = usable by default, 0 = invalid/questionable
 notes                 status note
@@ -111,10 +109,10 @@ k_index
 sample_idx
 time_s
 
-q_muse_w
-q_muse_x
-q_muse_y
-q_muse_z
+q_Muse_w
+q_Muse_x
+q_Muse_y
+q_Muse_z
 
 q_robot_w
 q_robot_x
@@ -201,10 +199,10 @@ resampling_method
 q_F2M_wxyz
 q_W2B_wxyz
 idx_start_robot
-idx_start_muse
+idx_start_Muse
 i0_robot
-i0_muse
-source_muse_file
+i0_Muse
+source_Muse_file
 source_robot_file
 ```
 
@@ -241,13 +239,13 @@ All quaternions are stored in this order:
 [w x y z]
 ```
 
-The MUSE quaternion after compensation/alignment is:
+The Muse quaternion after compensation/alignment is:
 
 ```text
-q_muse
+q_Muse
 ```
 
-The robot quaternion transformed into the MUSE frame is:
+The robot quaternion transformed into the Muse frame is:
 
 ```text
 q_robot
@@ -256,26 +254,26 @@ q_robot
 The correction quaternion is:
 
 ```text
-q_err = conjugate(q_muse) * q_robot
+q_err = conjugate(q_Muse) * q_robot
 ```
 
 Therefore:
 
 ```text
-q_robot ≈ q_muse * q_err
+q_robot ≈ q_Muse * q_err
 ```
 
 For AI compensation, the recommended supervised-learning formulation is:
 
 ```text
-input  = q_muse
+input  = q_Muse
 output = q_err
 ```
 
 An alternative is:
 
 ```text
-input  = q_muse
+input  = q_Muse
 output = q_robot
 ```
 
@@ -334,7 +332,7 @@ samples = pd.read_csv(root / "summary" / "all_samples.csv")
 valid_trial_ids = set(valid_manifest["trial_id"])
 samples_valid = samples[samples["trial_id"].isin(valid_trial_ids)].copy()
 
-X = samples_valid[["q_muse_w", "q_muse_x", "q_muse_y", "q_muse_z"]].to_numpy()
+X = samples_valid[["q_Muse_w", "q_Muse_x", "q_Muse_y", "q_Muse_z"]].to_numpy()
 y = samples_valid[["q_err_w", "q_err_x", "q_err_y", "q_err_z"]].to_numpy()
 ```
 
@@ -347,14 +345,14 @@ for _, row in valid_manifest.iterrows():
     csv_path = root / row["relative_csv_path"]
     trial = pd.read_csv(csv_path)
 
-    q_muse = trial[["q_muse_w", "q_muse_x", "q_muse_y", "q_muse_z"]].to_numpy()
+    q_Muse = trial[["q_Muse_w", "q_Muse_x", "q_Muse_y", "q_Muse_z"]].to_numpy()
     q_err = trial[["q_err_w", "q_err_x", "q_err_y", "q_err_z"]].to_numpy()
 
     sequences.append({
         "trial_id": row["trial_id"],
         "trajectory_name": row["trajectory_name"],
         "axis": row["axis"],
-        "q_muse": q_muse,
+        "q_Muse": q_Muse,
         "q_err": q_err,
     })
 ```
@@ -381,7 +379,7 @@ Load one per-trial CSV:
 csv_path = fullfile(root, valid_manifest.relative_csv_path{1});
 trial = readtable(csv_path);
 
-q_muse = trial{:, {"q_muse_w", "q_muse_x", "q_muse_y", "q_muse_z"}};
+q_Muse = trial{:, {"q_Muse_w", "q_Muse_x", "q_Muse_y", "q_Muse_z"}};
 q_err  = trial{:, {"q_err_w",  "q_err_x",  "q_err_y",  "q_err_z"}};
 ```
 
@@ -411,7 +409,7 @@ Default input/output definition:
 
 ```text
 input features:
-    q_muse_w, q_muse_x, q_muse_y, q_muse_z
+    q_Muse_w, q_Muse_x, q_Muse_y, q_Muse_z
 
 target:
     q_err_w, q_err_x, q_err_y, q_err_z
